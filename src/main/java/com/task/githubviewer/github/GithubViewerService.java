@@ -1,5 +1,6 @@
 package com.task.githubviewer.github;
 
+import com.task.githubviewer.rest.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -36,6 +37,8 @@ public class GithubViewerService {
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return Arrays.asList(response.getBody());
+        } else if (response.getStatusCode().value()==404) {
+            throw new UserNotFoundException("User " + username + " not found");
         } else {
             return Collections.emptyList();
         }
