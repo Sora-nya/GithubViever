@@ -1,13 +1,11 @@
 package com.task.githubviewer.rest;
 
 import com.task.githubviewer.github.GithubRepo;
+import com.task.githubviewer.github.GithubViewerService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,13 +13,20 @@ import java.util.List;
 @RequestMapping("/api/viewer")
 public class ViewerController {
 
-    @GetMapping(value = "/{username}")
-    ResponseEntity<List<GithubRepo>> getAllUserGithubRepos(@RequestHeader(HttpHeaders.ACCEPT) String acceptHeader) {
+    private final GithubViewerService githubViewerService;
+
+    public ViewerController(GithubViewerService githubViewerService) {
+        this.githubViewerService = githubViewerService;
+    }
+
+    @GetMapping(value = "/{userName}")
+    ResponseEntity<List<GithubRepo>> getAllUserGithubRepos(@RequestHeader(HttpHeaders.ACCEPT) String acceptHeader,
+                                                           @PathVariable String userName) {
         if (!acceptHeader.equals(MediaType.APPLICATION_JSON_VALUE)) {
             throw new NotAcceptableException("Unsupported media type: " + acceptHeader + " not accepted");
         }
-
-        return  null;
+        List<GithubRepo> githubRepos = githubViewerService.getUserGithubRepos(userName);
+        return  ResponseEntity.ok(githubRepos);
     }
 
 
