@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/viewer")
-public class ViewerController {
+@RequestMapping("/api/v1/repos")
+public class GitHubViewerController {
 
     private final GithubViewerService githubViewerService;
 
-    public ViewerController(GithubViewerService githubViewerService) {
+    public GitHubViewerController(GithubViewerService githubViewerService) {
         this.githubViewerService = githubViewerService;
     }
 
@@ -26,7 +26,7 @@ public class ViewerController {
             throw new NotAcceptableException("Unsupported media type: " + acceptHeader + " not accepted");
         }
         List<GithubRepo> githubRepos = githubViewerService.getUserGithubRepos(userName);
-        return  ResponseEntity.ok(githubRepos);
+        return ResponseEntity.ok(githubRepos);
     }
 
 
