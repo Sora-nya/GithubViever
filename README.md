@@ -23,7 +23,7 @@ git clone https://github.com/Sora-nya/GithubViever.git
 2. **Navigate to the project directory:**
 
 ```bash
-cd github-viewer
+cd GithubViever
 ```
 
 
@@ -45,8 +45,9 @@ To list non-fork repositories for a GitHub user, make a GET request with the fol
 
 Example Request:
 
-GET /api/v1/repos/octocat
+`GET /api/v1/repos/octocat
 Accept: application/json
+`
 
 Example Response:
 ```json
@@ -65,18 +66,18 @@ Example Response:
     ...
 ]
 ```
-## Handling Errors
+## Error Codes
 
 User Not Found
 
 Example Request:
 
 ```bash
-
 GET /api/repositories/nonexistentuser
 Accept: application/json
-Example Response:
 ```
+Example Response:
+
 ```json
 {
     "status": 404,
