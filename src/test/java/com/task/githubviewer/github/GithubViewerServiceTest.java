@@ -32,18 +32,21 @@ class GithubViewerServiceTest {
     @Test
     void shouldGetUserGithubRepos() {
         //given
+
         String userName = "testuser";
         String getRepoUrl = String.format("https://api.github.com/users/%s/repos", userName);
         String userRepoName = "testuser/testrepo";
         String testRepo = "testrepo";
         String getBranchesUrl = String.format("https://api.github.com/repos/%s/branches", userRepoName);
-        GithubApiRepo[] mockRepos = {new GithubApiRepo(testRepo,userRepoName)};
+        GithubApiRepo[] mockRepos = {new GithubApiRepo(testRepo, userRepoName)};
         when(mockRestTemplate.getForEntity(eq(getRepoUrl), any())).thenReturn(new ResponseEntity<>(mockRepos, HttpStatus.OK));
         String branchName = "main";
         Commit commit = new Commit("6c8a5b09a1e76fb3b2bb7e39ec45a4b47f292c04");
         GithubApiBranch[] mockBranches = {new GithubApiBranch(branchName, commit)};
-        when(mockRestTemplate.getForEntity(eq(getBranchesUrl),any())).thenReturn(new ResponseEntity<>(mockBranches, HttpStatus.OK));
+        when(mockRestTemplate.getForEntity(eq(getBranchesUrl), any())).thenReturn(new ResponseEntity<>(mockBranches, HttpStatus.OK));
+
         //when
+
         List<GithubRepo> result = githubViewerService.getUserGithubRepos(userName);
 
         //then
