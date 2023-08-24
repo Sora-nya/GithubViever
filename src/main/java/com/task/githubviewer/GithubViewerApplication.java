@@ -13,9 +13,4 @@ public class GithubViewerApplication {
         SpringApplication.run(GithubViewerApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder
-                .build();
-    }
 }
