@@ -1,5 +1,7 @@
 package com.task.githubviewer.github;
 
+import com.task.githubviewer.github.api.GithubApiBranch;
+import com.task.githubviewer.github.api.GithubApiRepo;
 import com.task.githubviewer.rest.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,13 +40,13 @@ public class GithubViewerService {
 
     private List<BranchDetails> extractBranches(GithubApiRepo githubApiRepo) {
         return getUserBranches(githubApiRepo.fullName()).stream()
-                .map(gitHubApiBranch -> new BranchDetails(gitHubApiBranch.name(),
-                        gitHubApiBranch.commit().sha()))
+                .map(githubApiBranch -> new BranchDetails(githubApiBranch.name(),
+                        githubApiBranch.commit().sha()))
                 .collect(Collectors.toList());
     }
 
-    public List<GithubApiRepo> getUserRepos(String userName) {
-        String apiUrl = String.format("%S/users/%S/repos", GITHUB_API_URL, userName);
+    private List<GithubApiRepo> getUserRepos(String userName) {
+        String apiUrl = String.format("%s/users/%s/repos", GITHUB_API_URL, userName);
         try {
             ResponseEntity<GithubApiRepo[]> response = restTemplate.getForEntity(apiUrl, GithubApiRepo[].class);
             return Arrays.asList(response.getBody());
@@ -53,9 +55,9 @@ public class GithubViewerService {
         }
     }
 
-    List<GitHubApiBranch> getUserBranches(String fullName) {
-        String apiUrl = String.format("%S/repos/%S/branches", GITHUB_API_URL, fullName);
-        ResponseEntity<GitHubApiBranch[]> response = restTemplate.getForEntity(apiUrl, GitHubApiBranch[].class);
+    private List<GithubApiBranch> getUserBranches(String fullName) {
+        String apiUrl = String.format("%s/repos/%s/branches", GITHUB_API_URL, fullName);
+        ResponseEntity<GithubApiBranch[]> response = restTemplate.getForEntity(apiUrl, GithubApiBranch[].class);
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return Arrays.asList(response.getBody());

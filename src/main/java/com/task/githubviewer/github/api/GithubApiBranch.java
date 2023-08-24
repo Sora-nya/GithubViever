@@ -1,7 +1,7 @@
-package com.task.githubviewer.github;
+package com.task.githubviewer.github.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record Commit(String sha) {
+public record GithubApiBranch(String name, Commit commit) {
 }

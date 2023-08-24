@@ -86,6 +86,7 @@ Example Response:
 ```
 
 Unsupported Media Type
+
 Example Request:
 
 ```bash
